@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Life, In Receipts — India 2023</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bg: #0a0a12;
+    --surface: #12121e;
+    --surface2: #1a1a2e;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8e8f0;
+    --text-dim: rgba(232,232,240,0.5);
+    --text-faint: rgba(232,232,240,0.25);
+    --ent: #7c3aed;
+    --ent-l: #a78bfa;
+    --fit: #059669;
+    --fit-l: #34d399;
+    --trv: #0284c7;
+    --trv-l: #38bdf8;
+    --shp: #d97706;
+    --shp-l: #fbbf24;
+    --fraud: #ef4444;
+    --fraud-l: #fca5a5;
+    --accent: #f59e0b;
+    --r: 8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; background: var(--bg); }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--bg);
+  }
+
+  /* === HERO === */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  #particle-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.7;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 800px; }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+  }
+
+  .hero-title em { font-style: normal; color: var(--accent); }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--text-dim);
+    max-width: 560px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.7s;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.9s;
+  }
+
+  .hero-stat { text-align: center; }
+
+  .hero-stat-n {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #fff;
+    display: block;
+  }
+
+  .hero-stat-l {
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--text-faint);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .scroll-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid var(--text-faint);
+    border-bottom: 2px solid var(--text-faint);
+    transform: rotate(45deg);
+    animation: bounce 1.5s ease infinite;
+  }
+
+  /* === NAV === */
+  #nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,18,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    height: 52px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+  #nav::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-btn:hover { background: var(--surface2); color: var(--text); }
+  .nav-btn.active {
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+    border-color: var(--accent);
+  }
+
+  /* === SECTIONS === */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+    display: none;
+  }
+
+  .section.active { display: block; }
+
+  .section-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.15;
+  }
+
+  .section-desc {
+    color: var(--text-dim);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 3rem;
+  }
+
+  /* === GRID UTILITIES === */
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+  @media (max-width: 900px) {
+    .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  }
+
+  /* === CARDS === */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: rgba(255,255,255,0.15); }
+
+  .card-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-faint);
+    margin-bottom: 0.5rem;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .card-value {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .card-sub { font-size: 0.8rem; color: var(--text-dim); }
+
+  /* === CATEGORY PILL === */
+  .cat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .cat-ent  { background: rgba(124,58,237,0.15); color: var(--ent-l); border: 1px solid rgba(124,58,237,0.3); }
+  .cat-fit  { background: rgba(5,150,105,0.15); color: var(--fit-l); border: 1px solid rgba(5,150,105,0.3); }
+  .cat-trv  { background: rgba(2,132,199,0.15); color: var(--trv-l); border: 1px solid rgba(2,132,199,0.3); }
+  .cat-shp  { background: rgba(217,119,6,0.15); color: var(--shp-l); border: 1px solid rgba(217,119,6,0.3); }
+  .cat-fraud { background: rgba(239,68,68,0.15); color: var(--fraud-l); border: 1px solid rgba(239,68,68,0.3); }
+
+  /* === BAR CHART === */
+  .bar-chart { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .bar-row { display: grid; grid-template-columns: 120px 1fr 80px; gap: 0.75rem; align-items: center; }
+
+  .bar-label { font-size: 0.8rem; color: var(--text-dim); text-align: right; }
+
+  .bar-track {
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 1s cubic-bezier(.4,0,.2,1);
+  }
+
+  .bar-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* === MONTHLY CHART === */
+  #monthly-canvas-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+  }
+
+  canvas { display: block; }
+
+  /* === TIMELINE === */
+  .timeline { position: relative; padding-left: 1.5rem; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+
+  .timeline-item:hover {
+    border-color: rgba(255,255,255,0.2);
+    transform: translateX(4px);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.9rem;
+    top: 1.5rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-faint);
+  }
+
+  .timeline-name { font-weight: 600; font-size: 0.9rem; }
+
+  .timeline-merchant { color: var(--text-dim); font-size: 0.85rem; }
+
+  .timeline-amount {
+    margin-left: auto;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .amount-legit { color: var(--fit-l); }
+  .amount-fraud { color: var(--fraud-l); }
+
+  /* === HOUR WHEEL === */
+  #hour-wheel-wrap {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  #hour-wheel { flex-shrink: 0; }
+
+  .hour-legend { flex: 1; min-width: 200px; }
+
+  .hour-entry {
+    display: grid;
+    grid-template-columns: 4rem 1fr 3rem;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.8rem;
+  }
+
+  .hour-time { font-family: 'Space Mono', monospace; color: var(--text-dim); }
+  .hour-n { font-family: 'Space Mono', monospace; color: var(--text); font-weight: 700; }
+
+  /* === SEARCH & RECEIPTS === */
+  .search-bar {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.65rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-faint); }
+
+  .filter-btn {
+    padding: 0.65rem 1.1rem;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover, .filter-btn.on { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
+
+  #receipts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .receipt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.1rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .receipt-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+
+  .receipt-card.ent::before { background: var(--ent); }
+  .receipt-card.fit::before { background: var(--fit); }
+  .receipt-card.trv::before { background: var(--trv); }
+  .receipt-card.shp::before { background: var(--shp); }
+
+  .receipt-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+  .receipt-card.fraud-card { border-color: rgba(239,68,68,0.3); }
+
+  .receipt-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.6rem;
+  }
+
+  .receipt-merchant {
+    font-weight: 600;
+    font-size: 0.9rem;
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .receipt-amount {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .receipt-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .receipt-person { font-size: 0.78rem; color: var(--text-dim); }
+  .receipt-loc { font-size: 0.72rem; color: var(--text-faint); }
+  .receipt-date { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--text-faint); }
+
+  .fraud-badge {
+    position: absolute;
+    top: 0.6rem;
+    right: 3.5rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    background: var(--fraud);
+    color: #fff;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+  }
+
+  #receipts-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    margin-bottom: 0.75rem;
+  }
+
+  /* === STATE MAP === */
+  .state-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .state-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .state-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.2); }
+
+  .state-heat {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    border-radius: var(--r);
+  }
+
+  .state-name { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.4rem; position: relative; }
+  .state-total { font-family: 'Space Mono', monospace; font-size: 0.9rem; font-weight: 700; position: relative; }
+  .state-fp {
+    font-size: 0.7rem;
+    position: relative;
+    margin-top: 0.25rem;
+  }
+
+  /* === FRAUD STORY === */
+  .fraud-meter {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .fraud-circle-wrap {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .fraud-circle-bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.06);
+    stroke-width: 14;
+  }
+
+  .fraud-circle-fill {
+    fill: none;
+    stroke: var(--fraud);
+    stroke-width: 14;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    stroke-dasharray: 502;
+    stroke-dashoffset: 502;
+    transition: stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1);
+  }
+
+  .fraud-circle-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .fraud-pct {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--fraud-l);
+  }
+
+  .fraud-pct-label { font-size: 0.75rem; color: var(--text-dim); }
+
+  .insight-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+
+  .insight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.25rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .insight-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .insight-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.35rem; }
+  .insight-text { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
+
+  /* === STORY SECTION === */
+  .story-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .story-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100%;
+    background: linear-gradient(to left, var(--bg), transparent);
+    pointer-events: none;
+  }
+
+  .story-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 4rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.04);
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    line-height: 1;
+  }
+
+  .story-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .story-headline {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .story-body {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  .story-data {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .story-datum { }
+  .story-datum-n {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  .story-datum-l { font-size: 0.72rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* === ANIMATIONS === */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50%       { transform: rotate(45deg) translateY(5px); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.5; }
+  }
+
+  .fade-in { opacity: 0; animation: fadeUp 0.6s ease forwards; }
+
+  /* === SPARKLINE BARS === */
+  .sparkline {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 40px;
+  }
+
+  .spark-bar {
+    flex: 1;
+    border-radius: 2px 2px 0 0;
+    min-height: 2px;
+    transition: height 0.8s ease;
+  }
+
+  /* === MODAL === */
+  #modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  #modal-overlay.open { display: flex; }
+
+  #modal {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+  }
+
+  #modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 1;
+    padding: 0.25rem;
+  }
+
+  #modal-close:hover { color: var(--text); }
+
+  .modal-receipt-header { margin-bottom: 1.5rem; }
+  .modal-merchant { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .modal-amount { font-family: 'Space Mono', monospace; font-size: 2rem; font-weight: 700; }
+  .modal-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .modal-field-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: 0.2rem; }
+  .modal-field-value { font-size: 0.9rem; font-weight: 500; }
+
+  /* === SCROLLBAR === */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* === PROGRESS BAR === */
+  .progress-bar-wrap { background: rgba(255,255,255,0.06); border-radius: 100px; height: 6px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; border-radius: 100px; transition: width 1s ease; }
+
+  /* === MONTH SELECTOR === */
+  .month-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .month-pill {
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .month-pill:hover, .month-pill.on {
+    background: var(--surface2);
+    border-color: rgba(255,255,255,0.2);
+    color: var(--text);
+  }
+
+  .month-pill.on { border-color: var(--accent); color: var(--accent); }
+
+  /* === DOUGHNUT === */
+  .donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .donut-legend { flex: 1; min-width: 160px; }
+  .donut-leg-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.83rem;
+  }
+  .donut-leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .donut-leg-pct { margin-left: auto; font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--text-dim); }
+
+  @media (max-width: 600px) {
+    .bar-row { grid-template-columns: 80px 1fr 60px; }
+    .bar-label { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="particle-canvas"></canvas>
+  <div class="hero-content">
+    <p class="hero-eyebrow">India · 2022–2024 · 8,017 transactions</p>
+    <h1 class="hero-title">Your Life,<br><em>In Receipts</em></h1>
+    <p class="hero-sub">Every transaction tells a fragment of a story. Together, they reveal who we are — where we go, what we spend on, and the shadows hiding in plain sight.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-n" id="hero-n">0</span>
+        <span class="hero-stat-l">Transactions</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-n" id="hero-s">₹0</span>
+        <span class="hero-stat-l">Total Spent</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-n" id="hero-f">0%</span>
+        <span class="hero-stat-l">Flagged Fraud</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-n">28</span>
+        <span class="hero-stat-l">States</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint" onclick="document.getElementById('nav').scrollIntoView({behavior:'smooth'})">
+    <span>Explore</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- NAV -->
+<nav id="nav">
+  <button class="nav-btn active" onclick="showSection('overview')">Overview</button>
+  <button class="nav-btn" onclick="showSection('categories')">Categories</button>
+  <button class="nav-btn" onclick="showSection('timeline')">Timeline</button>
+  <button class="nav-btn" onclick="showSection('receipts')">All Receipts</button>
+  <button class="nav-btn" onclick="showSection('geography')">Geography</button>
+  <button class="nav-btn" onclick="showSection('fraud')">Fraud Lens</button>
+  <button class="nav-btn" onclick="showSection('story')">The Story</button>
+</nav>
+
+<!-- OVERVIEW -->
+<div id="section-overview" class="section active">
+  <p class="section-eyebrow">Big Picture</p>
+  <h2 class="section-title">India's Digital Pulse</h2>
+  <p class="section-desc">8,017 financial moments captured across 28 states. Travel dominates spending; online shopping leads in volume. And more than half may not be what they seem.</p>
+
+  <div class="grid-4" style="margin-bottom:2rem">
+    <div class="card">
+      <div class="card-label">Total Volume</div>
+      <div class="card-value">8,017</div>
+      <div class="card-sub">transactions recorded</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Money Moved</div>
+      <div class="card-value" style="font-size:1.6rem">₹4.9 Cr</div>
+      <div class="card-sub">across all categories</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Fraud Rate</div>
+      <div class="card-value" style="color:var(--fraud-l)">52.4%</div>
+      <div class="card-sub">transactions flagged</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Avg. Transaction</div>
+      <div class="card-value" style="font-size:1.6rem">₹5,145</div>
+      <div class="card-sub">per purchase</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:2rem">
+    <div class="card">
+      <div class="card-label" style="margin-bottom:1.25rem">Spending by Category</div>
+      <div class="bar-chart" id="cat-bars"></div>
+    </div>
+    <div class="card">
+      <div class="card-label" style="margin-bottom:1rem">Category Volume Split</div>
+      <div class="donut-wrap">
+        <canvas id="donut-canvas" width="160" height="160" style="flex-shrink:0"></canvas>
+        <div class="donut-legend" id="donut-legend"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label" style="margin-bottom:1rem">Monthly Spending Rhythm</div>
+    <div id="monthly-sparkline" style="display:flex;align-items:flex-end;gap:4px;height:80px;margin-bottom:0.5rem"></div>
+    <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:var(--text-faint);font-family:'Space Mono',monospace">
+      <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+    </div>
+    <div style="margin-top:1rem;font-size:0.8rem;color:var(--text-dim)">Peak spending month: <strong style="color:var(--text)">June</strong> (₹47.9L) · Lowest: <strong style="color:var(--text)">September</strong></div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<div id="section-categories" class="section">
+  <p class="section-eyebrow">What People Buy</p>
+  <h2 class="section-title">Four Windows Into Life</h2>
+  <p class="section-desc">Entertainment, fitness, travel, shopping — four categories that together paint a portrait of everyday desires and priorities.</p>
+
+  <div class="grid-2" style="margin-bottom:2rem" id="cat-detail-cards"></div>
+
+  <div class="card">
+    <div class="card-label" style="margin-bottom:1.25rem">Month-by-Month Category Breakdown</div>
+    <div class="month-pills" id="cat-month-pills"></div>
+    <canvas id="cat-monthly-canvas" width="700" height="220" style="width:100%;max-width:700px"></canvas>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div id="section-timeline" class="section">
+  <p class="section-eyebrow">When Life Happens</p>
+  <h2 class="section-title">Transactions Through Time</h2>
+  <p class="section-desc">Explore the rhythm of spending across hours and months. When does activity spike? When does fraud strike?</p>
+
+  <div class="grid-2" style="margin-bottom:2rem">
+    <div class="card">
+      <div class="card-label" style="margin-bottom:1rem">24-Hour Activity Wheel</div>
+      <div id="hour-wheel-wrap">
+        <canvas id="hour-canvas" width="220" height="220" id="hour-wheel"></canvas>
+        <div class="hour-legend" id="hour-legend"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label" style="margin-bottom:1rem">Peak Hours Insight</div>
+      <div id="peak-hours-list"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label" style="margin-bottom:1.25rem">Recent High-Value Transactions</div>
+    <div class="timeline" id="timeline-list"></div>
+  </div>
+</div>
+
+<!-- RECEIPTS -->
+<div id="section-receipts" class="section">
+  <p class="section-eyebrow">The Archive</p>
+  <h2 class="section-title">Every Receipt, Every Story</h2>
+  <p class="section-desc">Browse, search and filter through 1,000 individual transactions. Each one a moment in someone's day.</p>
+
+  <div class="search-bar">
+    <input type="text" class="search-input" id="search-input" placeholder="Search by name, city, merchant…">
+    <button class="filter-btn on" onclick="toggleFilter('all')">All</button>
+    <button class="filter-btn" onclick="toggleFilter('entertainment')">Entertainment</button>
+    <button class="filter-btn" onclick="toggleFilter('fitness_and_medical')">Fitness</button>
+    <button class="filter-btn" onclick="toggleFilter('travel')">Travel</button>
+    <button class="filter-btn" onclick="toggleFilter('online_shopping')">Shopping</button>
+    <button class="filter-btn" onclick="toggleFilter('fraud')">🚨 Fraud</button>
+  </div>
+
+  <div id="receipts-count"></div>
+  <div id="receipts-grid"></div>
+</div>
+
+<!-- GEOGRAPHY -->
+<div id="section-geography" class="section">
+  <p class="section-eyebrow">Across the Nation</p>
+  <h2 class="section-title">Where the Money Flows</h2>
+  <p class="section-desc">28 Indian states, each with its own spending story. Hover a state to explore volume, fraud exposure, and activity level.</p>
+
+  <div class="grid-3" style="margin-bottom:2rem">
+    <div class="card">
+      <div class="card-label">Top Spending State</div>
+      <div class="card-value" style="font-size:1.4rem">Tamil Nadu</div>
+      <div class="card-sub">₹20.7L total spend</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Highest Fraud Rate</div>
+      <div class="card-value" style="font-size:1.4rem;color:var(--fraud-l)">Bihar</div>
+      <div class="card-sub">72.4% fraud rate</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Most Active State</div>
+      <div class="card-value" style="font-size:1.4rem">Uttarakhand</div>
+      <div class="card-sub">384 transactions</div>
+    </div>
+  </div>
+
+  <div class="state-grid" id="state-grid"></div>
+</div>
+
+<!-- FRAUD -->
+<div id="section-fraud" class="section">
+  <p class="section-eyebrow">The Shadow Side</p>
+  <h2 class="section-title">The Fraud Epidemic</h2>
+  <p class="section-desc">More than half of all transactions carry a fraud flag. This is not noise — it's a systemic pattern hiding in plain sight.</p>
+
+  <div class="grid-2" style="margin-bottom:2rem">
+    <div class="fraud-meter">
+      <div class="fraud-circle-wrap">
+        <svg width="200" height="200" viewBox="0 0 200 200">
+          <circle class="fraud-circle-bg" cx="100" cy="100" r="80"/>
+          <circle class="fraud-circle-fill" id="fraud-circle" cx="100" cy="100" r="80"/>
+        </svg>
+        <div class="fraud-circle-text">
+          <div class="fraud-pct">52.4%</div>
+          <div class="fraud-pct-label">of all transactions</div>
+        </div>
+      </div>
+      <div style="font-size:0.85rem;color:var(--text-dim)">5,046 out of 8,017 transactions are flagged as potentially fraudulent</div>
+    </div>
+    <div class="card">
+      <div class="card-label" style="margin-bottom:1.25rem">Fraud Rate by Category</div>
+      <div id="fraud-cat-bars" class="bar-chart"></div>
+    </div>
+  </div>
+
+  <div class="insight-grid" id="fraud-insights"></div>
+
+  <div style="margin-top:2rem">
+    <div class="card">
+      <div class="card-label" style="margin-bottom:1.25rem">Fraud by State (top 10)</div>
+      <div id="fraud-state-bars" class="bar-chart"></div>
+    </div>
+  </div>
+</div>
+
+<!-- STORY -->
+<div id="section-story" class="section">
+  <p class="section-eyebrow">The Narrative</p>
+  <h2 class="section-title">What the Data Says</h2>
+  <p class="section-desc">Behind every number is a human moment. Here are the five chapters hidden inside this dataset.</p>
+
+  <div id="story-cards"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal">
+    <button id="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const D = {
+  summary: {"total":8017,"spent":48966073,"fraud":5046,"fraud_pct":52.4,"cities":311,"states":28,"merchants":1346},
+  cats: {
+    "entertainment":{"n":2388,"total":11572454,"avg":5139,"fraud_pct":53.3},
+    "fitness_and_medical":{"n":2067,"total":9785338,"avg":4982,"fraud_pct":52.7},
+    "travel":{"n":2419,"total":12044742,"avg":5487,"fraud_pct":48.1},
+    "online_shopping":{"n":2596,"total":11558160,"avg":4935,"fraud_pct":53.7}
+  },
+  months: {"1":{"cats":{"entertainment":882188,"fitness_and_medical":673436,"travel":632311,"online_shopping":1228542},"count":734,"fraud":414,"total":3740918},"2":{"cats":{"entertainment":794778,"fitness_and_medical":755845,"travel":946396,"online_shopping":646613},"count":685,"fraud":332,"total":3326750},"3":{"cats":{"entertainment":1025157,"fitness_and_medical":865354,"travel":1264736,"online_shopping":906350},"count":882,"fraud":494,"total":4260880},"4":{"cats":{"entertainment":1116305,"fitness_and_medical":1050344,"travel":1330290,"online_shopping":607111},"count":824,"fraud":406,"total":4234466},"5":{"cats":{"entertainment":1082744,"fitness_and_medical":584411,"travel":599660,"online_shopping":890820},"count":710,"fraud":314,"total":3290031},"6":{"cats":{"entertainment":1035173,"fitness_and_medical":842392,"travel":1280167,"online_shopping":1141934},"count":1002,"fraud":522,"total":4791417},"7":{"cats":{"entertainment":603257,"fitness_and_medical":1117773,"travel":635076,"online_shopping":1250108},"count":787,"fraud":357,"total":3942666},"8":{"cats":{"entertainment":886993,"fitness_and_medical":654670,"travel":1221227,"online_shopping":403389},"count":776,"fraud":360,"total":3559015},"9":{"cats":{"entertainment":819837,"fitness_and_medical":522785,"travel":744567,"online_shopping":794447},"count":727,"fraud":330,"total":3181833},"10":{"cats":{"entertainment":644385,"fitness_and_medical":493874,"travel":987145,"online_shopping":983848},"count":745,"fraud":326,"total":3313033},"11":{"cats":{"entertainment":692576,"fitness_and_medical":858051,"travel":712435,"online_shopping":979135},"count":802,"fraud":373,"total":3750044},"12":{"cats":{"entertainment":881012,"fitness_and_medical":568404,"travel":952891,"online_shopping":866096},"count":743,"fraud":395,"total":3778017}},
+  hourly: {"0":{"n":496,"fraud":196,"avg":5319,"total":2276376},"1":{"n":372,"fraud":181,"avg":4868,"total":1762157},"2":{"n":405,"fraud":132,"avg":4614,"total":1628798},"3":{"n":404,"fraud":213,"avg":5517,"total":2129685},"4":{"n":340,"fraud":190,"avg":5434,"total":1575975},"5":{"n":358,"fraud":165,"avg":5844,"total":1910962},"6":{"n":414,"fraud":190,"avg":5162,"total":1811760},"7":{"n":369,"fraud":176,"avg":4918,"total":1780157},"8":{"n":348,"fraud":171,"avg":5593,"total":1923854},"9":{"n":426,"fraud":240,"avg":5212,"total":2011897},"10":{"n":426,"fraud":247,"avg":5298,"total":2166918},"11":{"n":544,"fraud":306,"avg":5119,"total":2533850},"12":{"n":431,"fraud":238,"avg":4885,"total":2022441},"13":{"n":263,"fraud":118,"avg":4599,"total":1159071},"14":{"n":334,"fraud":169,"avg":4195,"total":1271029},"15":{"n":375,"fraud":188,"avg":5251,"total":1759048},"16":{"n":347,"fraud":193,"avg":5467,"total":1897084},"17":{"n":511,"fraud":237,"avg":5031,"total":2495531},"18":{"n":397,"fraud":171,"avg":5536,"total":1987509},"19":{"n":375,"fraud":181,"avg":5453,"total":1875856},"20":{"n":398,"fraud":220,"avg":4900,"total":1886439},"21":{"n":349,"fraud":133,"avg":5505,"total":1772485},"22":{"n":298,"fraud":154,"avg":4446,"total":1271630},"23":{"n":419,"fraud":214,"avg":5806,"total":2258558}},
+  states: [{"state":"Tamil Nadu","n":372,"total":2069353,"fraud":167,"fp":44.9},{"state":"Uttarakhand","n":384,"total":1960072,"fraud":232,"fp":60.4},{"state":"Arunachal Pradesh","n":370,"total":1934610,"fraud":202,"fp":54.6},{"state":"Telangana","n":357,"total":1897941,"fraud":173,"fp":48.5},{"state":"Nagaland","n":347,"total":1886770,"fraud":187,"fp":53.9},{"state":"Sikkim","n":358,"total":1842272,"fraud":157,"fp":43.9},{"state":"Tripura","n":350,"total":1775588,"fraud":160,"fp":45.7},{"state":"Assam","n":334,"total":1765218,"fraud":224,"fp":67.1},{"state":"Mizoram","n":318,"total":1762803,"fraud":129,"fp":40.6},{"state":"Goa","n":302,"total":1736442,"fraud":178,"fp":58.9},{"state":"Chhattisgarh","n":292,"total":1706506,"fraud":173,"fp":59.2},{"state":"Rajasthan","n":332,"total":1690594,"fraud":170,"fp":51.2},{"state":"West Bengal","n":359,"total":1678168,"fraud":224,"fp":62.4},{"state":"Karnataka","n":307,"total":1670839,"fraud":149,"fp":48.5},{"state":"Kerala","n":295,"total":1669139,"fraud":186,"fp":63.1},{"state":"Maharashtra","n":377,"total":1662670,"fraud":210,"fp":55.7},{"state":"Punjab","n":323,"total":1595749,"fraud":139,"fp":43.0},{"state":"Jharkhand","n":327,"total":1594189,"fraud":124,"fp":37.9},{"state":"Meghalaya","n":284,"total":1485555,"fraud":140,"fp":49.3},{"state":"Himachal Pradesh","n":261,"total":1469756,"fraud":93,"fp":35.6},{"state":"Bihar","n":254,"total":1354237,"fraud":184,"fp":72.4},{"state":"Andhra Pradesh","n":276,"total":1338386,"fraud":130,"fp":47.1},{"state":"Haryana","n":257,"total":1337408,"fraud":112,"fp":43.6},{"state":"Gujarat","n":254,"total":1332789,"fraud":180,"fp":70.9},{"state":"Manipur","n":260,"total":1266577,"fraud":113,"fp":43.5},{"state":"Odisha","n":281,"total":1261129,"fraud":155,"fp":55.2},{"state":"Madhya Pradesh","n":243,"total":1153074,"fraud":124,"fp":51.0},{"state":"Uttar Pradesh","n":245,"total":1104647,"fraud":152,"fp":62.0}]
+};
+
+// Sample records embedded (first 200 for display)
+const RECS = [{"dt":"2023-07-07 07:02","m":"Unknown","c":"entertainment","a":9139,"n":"Bhavin Roy","ci":"Rourkela","st":"Meghalaya","j":"Comptroller","g":"M","f":0,"mo":7,"hr":7},{"dt":"2023-04-25 11:53","m":"Hans-Kanda","c":"entertainment","a":7568,"n":"Yuvraj Madan","ci":"Jalna","st":"Mizoram","j":"Probation officer","g":"M","f":0,"mo":4,"hr":11},{"dt":"2023-05-28 18:26","m":"Unknown","c":"entertainment","a":9074,"n":"Drishya Bumb","ci":"Bharatpur","st":"Chhattisgarh","j":"","g":"F","f":0,"mo":5,"hr":18},{"dt":"2023-02-15 18:55","m":"Agate, Varkey and Luthra","c":"entertainment","a":5057,"n":"Lal","ci":"Nizamabad","st":"Jharkhand","j":"Chiropodist","g":"M","f":0,"mo":2,"hr":18},{"dt":"2023-06-10 12:09","m":"Bhardwaj, Vaidya and Walia","c":"fitness_and_medical","a":354,"n":"Malhotra","ci":"Bahraich","st":"Karnataka","j":"Engineering geologist","g":"M","f":0,"mo":6,"hr":12},{"dt":"2023-06-10 01:38","m":"Badami-Chahal","c":"fitness_and_medical","a":8760,"n":"Shaan Gola","ci":"Bokaro","st":"Meghalaya","j":"Therapist, drama","g":"F","f":0,"mo":6,"hr":1},{"dt":"2023-06-03 20:16","m":"Wason and Sons","c":"entertainment","a":6729,"n":"Lavanya Tak","ci":"Gwalior","st":"Telangana","j":"Armed forces training","g":"F","f":0,"mo":6,"hr":20},{"dt":"2023-06-07 07:13","m":"Savant, Bhardwaj and Lata","c":"travel","a":8187,"n":"Divij Agrawal","ci":"Rampur","st":"Uttarakhand","j":"Plant breeder","g":"M","f":1,"mo":6,"hr":7},{"dt":"2023-10-21 09:34","m":"Rastogi Ltd","c":"travel","a":9212,"n":"Ivan Atwal","ci":"Udaipur","st":"Andhra Pradesh","j":"Data processing manager","g":"F","f":0,"mo":10,"hr":9},{"dt":"2023-04-04 06:50","m":"Khanna Ltd","c":"fitness_and_medical","a":9183,"n":"Miraya Babu","ci":"","st":"Bihar","j":"Ceramics designer","g":"F","f":0,"mo":4,"hr":6},{"dt":"2022-10-26 01:44","m":"Chaudhari Group","c":"entertainment","a":4334,"n":"Sahil Rao","ci":"","st":"Bihar","j":"Logistics manager","g":"M","f":1,"mo":10,"hr":1},{"dt":"2022-09-05 01:52","m":"Gulati, Contractor and Hora","c":"entertainment","a":4403,"n":"Kavya Verma","ci":"Haldia","st":"Nagaland","j":"","g":"F","f":1,"mo":9,"hr":1},{"dt":"2023-04-18 06:30","m":"Bhalla, Wadhwa and Sarin","c":"fitness_and_medical","a":543,"n":"Riaan Sachdeva","ci":"Pallavaram","st":"Sikkim","j":"Conservator","g":"M","f":1,"mo":4,"hr":6},{"dt":"2023-06-22 11:15","m":"Walla and Sons","c":"fitness_and_medical","a":2476,"n":"Aaryahi","ci":"Dehradun","st":"Rajasthan","j":"Investment banker","g":"F","f":1,"mo":6,"hr":11},{"dt":"2022-11-18 23:28","m":"Saraf PLC","c":"travel","a":3501,"n":"Raunak","ci":"Pune","st":"Uttarakhand","j":"Biochemist, clinical","g":"M","f":1,"mo":11,"hr":23},{"dt":"2022-09-18 23:30","m":"Brar-Brahmbhatt","c":"travel","a":2967,"n":"Anaya Kamdar","ci":"Bardhaman","st":"Himachal Pradesh","j":"","g":"M","f":0,"mo":9,"hr":23},{"dt":"2023-06-29 05:44","m":"Ahuja-Chanda","c":"entertainment","a":8251,"n":"Ivan Mann","ci":"Unnao","st":"Jharkhand","j":"Furniture designer","g":"F","f":1,"mo":6,"hr":5},{"dt":"2022-09-18 19:13","m":"Divan Group","c":"entertainment","a":5742,"n":"Aradhya Ramachandran","ci":"Nagpur","st":"Mizoram","j":"Therapeutic radiographer","g":"","f":0,"mo":9,"hr":19},{"dt":"2023-02-12 16:31","m":"Dave-Kota","c":"travel","a":2908,"n":"Ivana Kale","ci":"Berhampur","st":"Mizoram","j":"","g":"M","f":1,"mo":2,"hr":16},{"dt":"2023-04-25 19:24","m":"Ramesh-Chaudhari","c":"fitness_and_medical","a":7241,"n":"Samiha Roy","ci":"Chandrapur","st":"Chhattisgarh","j":"TEFL teacher","g":"M","f":0,"mo":4,"hr":19},{"dt":"2023-06-26 11:42","m":"Lalla PLC","c":"travel","a":7276,"n":"Kartik Kari","ci":"","st":"Manipur","j":"Broadcast journalist","g":"F","f":0,"mo":6,"hr":11},{"dt":"2022-04-29 05:17","m":"Kade, Chawla and Keer","c":"online_shopping","a":8861,"n":"Adira Bobal","ci":"Ghaziabad","st":"Karnataka","j":"","g":"F","f":0,"mo":4,"hr":5},{"dt":"2022-11-07 15:17","m":"Dua-Savant","c":"fitness_and_medical","a":4149,"n":"Ira Buch","ci":"Siwan","st":"Haryana","j":"Teacher, primary school","g":"M","f":0,"mo":11,"hr":15},{"dt":"2022-10-06 23:10","m":"Gara Ltd","c":"online_shopping","a":4844,"n":"Navya Dhar","ci":"Motihari","st":"Assam","j":"Civil engineer","g":"M","f":1,"mo":10,"hr":23},{"dt":"2023-06-02 00:15","m":"Dugal Ltd","c":"online_shopping","a":2748,"n":"Nirvi Mani","ci":"Ahmedabad","st":"Manipur","j":"Plant breeder","g":"","f":1,"mo":6,"hr":0},{"dt":"2022-12-03 02:09","m":"Unknown","c":"entertainment","a":1878,"n":"Emir Mani","ci":"Avadi","st":"Gujarat","j":"Police officer","g":"F","f":1,"mo":12,"hr":2},{"dt":"2022-08-15 07:48","m":"Chander-Subramaniam","c":"entertainment","a":849,"n":"Devansh Balasubraman","ci":"Berhampur","st":"Rajasthan","j":"Research scientist","g":"F","f":0,"mo":8,"hr":7},{"dt":"2023-08-02 16:53","m":"Unknown","c":"entertainment","a":8223,"n":"Kiara Dara","ci":"","st":"Tamil Nadu","j":"Horticultural consultant","g":"M","f":0,"mo":8,"hr":16},{"dt":"2022-08-11 03:39","m":"Unknown","c":"entertainment","a":9810,"n":"Charvi Ghose","ci":"Durg","st":"Chhattisgarh","j":"Telecommunications researcher","g":"M","f":1,"mo":8,"hr":3},{"dt":"2022-07-25 21:27","m":"Khatri, Wadhwa and Gala","c":"online_shopping","a":9473,"n":"Dhruv Tripathi","ci":"Ahmedabad","st":"Goa","j":"Building services engineer","g":"M","f":1,"mo":7,"hr":21},{"dt":"2023-02-07 19:12","m":"Sami-Devan","c":"fitness_and_medical","a":6925,"n":"Nehmat Lanka","ci":"Jorhat","st":"Meghalaya","j":"Osteopath","g":"F","f":0,"mo":2,"hr":19},{"dt":"2022-09-23 00:26","m":"Shere-Garde","c":"online_shopping","a":6523,"n":"Divyansh","ci":"Bahraich","st":"Haryana","j":"Tree surgeon","g":"F","f":0,"mo":9,"hr":0},{"dt":"2023-12-15 05:48","m":"Kata LLC","c":"online_shopping","a":9364,"n":"Indrajit Vig","ci":"Kishanganj","st":"Karnataka","j":"Chartered accountant","g":"F","f":1,"mo":12,"hr":5},{"dt":"2023-02-27 08:18","m":"Bhavsar, Krishnan and Walia","c":"online_shopping","a":4552,"n":"Rania Balan","ci":"Kadapa","st":"Tripura","j":"Forensic psychologist","g":"M","f":0,"mo":2,"hr":8},{"dt":"2022-04-24 03:47","m":"Unknown","c":"travel","a":6434,"n":"Devansh Cherian","ci":"Bhimavaram","st":"Goa","j":"Farm manager","g":"F","f":1,"mo":4,"hr":3},{"dt":"2022-08-11 12:28","m":"Madan-Varkey","c":"entertainment","a":9918,"n":"Mahika Gara","ci":"Mumbai","st":"Punjab","j":"Armed forces training","g":"F","f":0,"mo":8,"hr":12},{"dt":"2022-07-26 04:17","m":"Jain, Sem and Thaker","c":"travel","a":1150,"n":"Adira","ci":"Bhavnagar","st":"Tripura","j":"Probation officer","g":"F","f":0,"mo":7,"hr":4},{"dt":"2023-12-04 17:52","m":"Malhotra-Ahluwalia","c":"fitness_and_medical","a":1086,"n":"Keya Suresh","ci":"Parbhani","st":"Madhya Pradesh","j":"","g":"F","f":0,"mo":12,"hr":17},{"dt":"2022-05-29 02:50","m":"Venkatesh Ltd","c":"online_shopping","a":7482,"n":"Mishti Raval","ci":"Pondicherry","st":"Tamil Nadu","j":"","g":"F","f":0,"mo":5,"hr":2},{"dt":"2024-01-11 07:58","m":"Kakar, Borde and Borra","c":"fitness_and_medical","a":8157,"n":"Aarav Thaman","ci":"Ballia","st":"Telangana","j":"Film editor","g":"M","f":0,"mo":1,"hr":7},{"dt":"2023-07-20 09:15","m":"Sundaram LLC","c":"online_shopping","a":9560,"n":"Shanaya Garg","ci":"Kollam","st":"Mizoram","j":"Clinical psychologist","g":"M","f":0,"mo":7,"hr":9},{"dt":"2023-06-03 10:11","m":"Rastogi, Kulkarni and Jhaveri","c":"fitness_and_medical","a":2755,"n":"Shray Biswas","ci":"Dibrugarh","st":"Telangana","j":"Aeronautical engineer","g":"M","f":0,"mo":6,"hr":10},{"dt":"2022-10-02 22:46","m":"Shan, Venkataraman and Tank","c":"online_shopping","a":5480,"n":"Nitya Sur","ci":"Hyderabad","st":"Kerala","j":"Garment technologist","g":"","f":1,"mo":10,"hr":22},{"dt":"2023-06-07 22:11","m":"Andra, Dugar and Rastogi","c":"entertainment","a":2828,"n":"Dhanuk Saini","ci":"Nangloi Jat","st":"Uttarakhand","j":"CFO","g":"F","f":0,"mo":6,"hr":22},{"dt":"2023-04-09 07:52","m":"Kapadia Group","c":"travel","a":9830,"n":"Priyansh Dara","ci":"Ramagundam","st":"Tripura","j":"","g":"F","f":0,"mo":4,"hr":7},{"dt":"2023-05-21 15:40","m":"Unknown","c":"entertainment","a":5099,"n":"Aarav","ci":"Bhubaneswar","st":"Arunachal Pradesh","j":"Primary school teacher","g":"M","f":1,"mo":5,"hr":15},{"dt":"2022-11-09 19:11","m":"Koshy, Kadakia and Yadav","c":"entertainment","a":6378,"n":"Farhan Lad","ci":"Delhi","st":"Rajasthan","j":"Lecturer","g":"M","f":0,"mo":11,"hr":19},{"dt":"2024-02-04 11:29","m":"Dhar-Bath","c":"fitness_and_medical","a":9815,"n":"Purab Bir","ci":"Fatehpur","st":"Chhattisgarh","j":"Paediatric nurse","g":"M","f":0,"mo":2,"hr":11},{"dt":"2022-08-11 12:28","m":"Madan-Varkey","c":"entertainment","a":9918,"n":"Mahika Gara","ci":"Mumbai","st":"Punjab","j":"Armed forces","g":"F","f":0,"mo":8,"hr":12},{"dt":"2023-06-23 10:55","m":"Soni PLC","c":"entertainment","a":9320,"n":"Ehsaan Gupta","ci":"Guwahati","st":"Andhra Pradesh","j":"Chartered loss adjuster","g":"M","f":0,"mo":6,"hr":10},{"dt":"2023-05-18 18:14","m":"Toor, Mane and Din","c":"online_shopping","a":9980,"n":"Parinaaz Raju","ci":"Jamalpur","st":"Sikkim","j":"Private music teacher","g":"M","f":0,"mo":5,"hr":18},{"dt":"2023-07-20 18:15","m":"Saini-Shere","c":"travel","a":9772,"n":"Pihu Kumar","ci":"Bhilwara","st":"Punjab","j":"Pathologist","g":"M","f":0,"mo":7,"hr":18},{"dt":"2023-09-11 20:47","m":"Sur-Bajwa","c":"travel","a":7692,"n":"Dharmajan Thakkar","ci":"Agartala","st":"Himachal Pradesh","j":"Quarry manager","g":"F","f":0,"mo":9,"hr":20},{"dt":"2022-04-25 21:44","m":"Samra, Kumer and Ramakrishnan","c":"online_shopping","a":9992,"n":"Trisha Saxena","ci":"Gorakhpur","st":"Tamil Nadu","j":"Engineer, site","g":"F","f":0,"mo":4,"hr":21},{"dt":"2023-08-02 23:20","m":"Kumer-Taneja","c":"travel","a":9534,"n":"Amani Keer","ci":"Navi Mumbai","st":"Himachal Pradesh","j":"Immigration officer","g":"M","f":0,"mo":8,"hr":23},{"dt":"2023-03-09 01:58","m":"Rattan Inc","c":"online_shopping","a":9869,"n":"Kartik Baria","ci":"Panvel","st":"Bihar","j":"Magazine journalist","g":"M","f":1,"mo":3,"hr":1},{"dt":"2022-07-25 06:13","m":"Sundaram Ltd","c":"online_shopping","a":9910,"n":"Chander","ci":"Eluru","st":"Gujarat","j":"Airline pilot","g":"F","f":1,"mo":7,"hr":6},{"dt":"2022-09-22 20:27","m":"Bajwa and Sons","c":"travel","a":9147,"n":"Kara","ci":"Nagpur","st":"Haryana","j":"Architect","g":"F","f":0,"mo":9,"hr":20},{"dt":"2023-02-19 13:12","m":"Subramaniam and Sons","c":"entertainment","a":9598,"n":"Misha Raja","ci":"Varanasi","st":"Nagaland","j":"Production assistant","g":"F","f":1,"mo":2,"hr":13},{"dt":"2023-01-24 04:10","m":"Varma and Sons","c":"entertainment","a":9753,"n":"Kanav Kashyap","ci":"Munger","st":"Mizoram","j":"Medical scientist","g":"F","f":0,"mo":1,"hr":4},{"dt":"2023-10-13 17:09","m":"Chokshi, Kapoor and Kota","c":"fitness_and_medical","a":8583,"n":"Tushar Varghese","ci":"Gangtok","st":"","j":"Systems developer","g":"F","f":1,"mo":10,"hr":17},{"dt":"2023-08-30 21:14","m":"Sampath LLC","c":"fitness_and_medical","a":9354,"n":"Yasmin Virk","ci":"Saharsa","st":"Mizoram","j":"Geologist","g":"F","f":1,"mo":8,"hr":21},{"dt":"2022-12-04 06:29","m":"Bhalla, Seth and Ben","c":"fitness_and_medical","a":9642,"n":"Damini Wable","ci":"Ahmedabad","st":"Haryana","j":"Speech therapist","g":"F","f":0,"mo":12,"hr":6},{"dt":"2022-09-17 05:13","m":"Sachdev and Sons","c":"fitness_and_medical","a":9160,"n":"Heer Bali","ci":"Hyderabad","st":"Madhya Pradesh","j":"Merchandiser","g":"","f":0,"mo":9,"hr":5},{"dt":"2023-04-27 04:21","m":"Ravel-Walia","c":"fitness_and_medical","a":8496,"n":"Zain Sehgal","ci":"Jhansi","st":"Assam","j":"Multimedia specialist","g":"F","f":1,"mo":4,"hr":4},{"dt":"2023-12-09 23:48","m":"Lad-Master","c":"entertainment","a":9542,"n":"Eshani Vasa","ci":"Dibrugarh","st":"","j":"Recruitment consultant","g":"F","f":1,"mo":12,"hr":23},{"dt":"2022-12-22 00:12","m":"Bawa, Saini and Viswanathan","c":"entertainment","a":9158,"n":"Kiara Sani","ci":"Satara","st":"Kerala","j":"Psychotherapist","g":"M","f":1,"mo":12,"hr":0},{"dt":"2023-04-07 12:56","m":"Kibe and Sons","c":"entertainment","a":9554,"n":"Stuvan Arya","ci":"Panvel","st":"Chhattisgarh","j":"Educational psychologist","g":"F","f":0,"mo":4,"hr":12},{"dt":"2023-03-07 23:18","m":"Madan, Ray and Acharya","c":"travel","a":9022,"n":"Ishaan Khalsa","ci":"Jamnagar","st":"Sikkim","j":"Insurance broker","g":"","f":1,"mo":3,"hr":23},{"dt":"2022-08-09 03:25","m":"Karpe-Hans","c":"entertainment","a":9980,"n":"Neysa Sampath","ci":"Gandhinagar","st":"Nagaland","j":"Building control surveyor","g":"F","f":0,"mo":8,"hr":3},{"dt":"2024-03-09 12:45","m":"Ramanathan, Brar and Amble","c":"travel","a":9784,"n":"Ishaan","ci":"Jehanabad","st":"Nagaland","j":"Location manager","g":"M","f":0,"mo":3,"hr":12},{"dt":"2024-03-17 17:07","m":"Sachar-Sarkar","c":"fitness_and_medical","a":9709,"n":"Aniruddh Biswas","ci":"Alappuzha","st":"Kerala","j":"Police officer","g":"F","f":0,"mo":3,"hr":17},{"dt":"2022-06-01 23:15","m":"Singhal Inc","c":"travel","a":9886,"n":"Anika Sekhon","ci":"Ongole","st":"","j":"Conservation officer","g":"F","f":0,"mo":6,"hr":23},{"dt":"2023-01-12 08:07","m":"Ahluwalia and Sons","c":"fitness_and_medical","a":9143,"n":"Jhanvi Sha","ci":"Dewas","st":"Gujarat","j":"Insurance risk surveyor","g":"M","f":1,"mo":1,"hr":8},{"dt":"2023-05-12 13:22","m":"Bajwa, Sandal and Issac","c":"travel","a":9195,"n":"Bhavin Rastogi","ci":"Purnia","st":"Tamil Nadu","j":"","g":"","f":1,"mo":5,"hr":13},{"dt":"2024-02-25 05:01","m":"Singhal, Bansal and Bera","c":"fitness_and_medical","a":9666,"n":"Kavya Rana","ci":"Tiruchirappalli","st":"Nagaland","j":"Production assistant","g":"F","f":1,"mo":2,"hr":5},{"dt":"2023-11-18 21:15","m":"Jaggi, Dhingra and Agarwal","c":"fitness_and_medical","a":9382,"n":"Ahana Gulati","ci":"Lucknow","st":"Arunachal Pradesh","j":"Museum curator","g":"F","f":1,"mo":11,"hr":21},{"dt":"2023-10-01 09:35","m":"Vyas PLC","c":"online_shopping","a":9100,"n":"Mannat Devi","ci":"Meerut","st":"Meghalaya","j":"Planning surveyor","g":"F","f":1,"mo":10,"hr":9},{"dt":"2023-07-24 06:36","m":"Rao, Dugar and Sant","c":"online_shopping","a":5563,"n":"Sana Choudhry","ci":"Parbhani","st":"Sikkim","j":"Conservation officer","g":"F","f":1,"mo":7,"hr":6},{"dt":"2023-04-24 07:08","m":"Mandal-Sane","c":"online_shopping","a":7009,"n":"Pari Yadav","ci":"","st":"Manipur","j":"Investment banker","g":"F","f":0,"mo":4,"hr":7},{"dt":"2023-06-09 09:03","m":"Char, Doctor and Swaminathan","c":"travel","a":6051,"n":"Ojas Trivedi","ci":"Asansol","st":"Assam","j":"","g":"F","f":0,"mo":6,"hr":9},{"dt":"2022-07-20 12:37","m":"Chauhan Ltd","c":"online_shopping","a":692,"n":"Jayan Savant","ci":"Gwalior","st":"Meghalaya","j":"Occupational psychologist","g":"M","f":0,"mo":7,"hr":12},{"dt":"2024-03-10 03:15","m":"Bhandari PLC","c":"travel","a":9458,"n":"Elakshi","ci":"","st":"Telangana","j":"Haematologist","g":"M","f":1,"mo":3,"hr":3},{"dt":"2023-07-09 06:01","m":"Karan PLC","c":"fitness_and_medical","a":442,"n":"Vivaan Sule","ci":"Chandrapur","st":"Manipur","j":"Musician","g":"","f":0,"mo":7,"hr":6},{"dt":"2023-08-14 16:25","m":"Sami, Balakrishnan and Das","c":"online_shopping","a":3707,"n":"Rati","ci":"Sambalpur","st":"Goa","j":"Pharmacist","g":"M","f":1,"mo":8,"hr":16},{"dt":"2022-07-18 14:19","m":"Srinivas, Arora and Venkataram","c":"travel","a":6222,"n":"Lavanya Ramachandran","ci":"Panihati","st":"Nagaland","j":"","g":"M","f":1,"mo":7,"hr":14},{"dt":"2023-09-13 10:04","m":"Wali-Kari","c":"online_shopping","a":651,"n":"Neysa Thaman","ci":"Bihar Sharif","st":"Kerala","j":"Astronomer","g":"M","f":0,"mo":9,"hr":10},{"dt":"2022-05-04 05:07","m":"Sampath, Sura and Kadakia","c":"entertainment","a":5202,"n":"Mahika Saha","ci":"Jamalpur","st":"Goa","j":"Merchandiser","g":"M","f":0,"mo":5,"hr":5},{"dt":"2023-11-13 19:34","m":"Mani, Madan and Bera","c":"entertainment","a":5765,"n":"Shray Som","ci":"Tirupati","st":"Tamil Nadu","j":"Passenger transport manager","g":"M","f":0,"mo":11,"hr":19},{"dt":"2024-03-20 09:50","m":"Bir LLC","c":"entertainment","a":8126,"n":"Vritika Korpal","ci":"Bahraich","st":"Uttar Pradesh","j":"Medical physicist","g":"F","f":0,"mo":3,"hr":9},{"dt":"2023-05-16 12:49","m":"Ganesan-Mannan","c":"online_shopping","a":7851,"n":"Shaan Sule","ci":"Udupi","st":"Karnataka","j":"Field seismologist","g":"F","f":1,"mo":5,"hr":12},{"dt":"2022-04-25 18:30","m":"Kumer LLC","c":"travel","a":6341,"n":"Hrishita Verma","ci":"Sultan Pur Majra","st":"Nagaland","j":"Metallurgist","g":"","f":0,"mo":4,"hr":18},{"dt":"2024-01-15 16:21","m":"Magar-Amble","c":"online_shopping","a":8464,"n":"Pari Karnik","ci":"Kota","st":"Mizoram","j":"Horticultural therapist","g":"F","f":1,"mo":1,"hr":16},{"dt":"2023-08-20 00:20","m":"Chawla, Choudhary and Golla","c":"online_shopping","a":4225,"n":"Yuvraj Bhardwaj","ci":"Anand","st":"Manipur","j":"Music teacher","g":"F","f":0,"mo":8,"hr":0},{"dt":"2022-08-09 06:32","m":"Divan-Kade","c":"travel","a":9027,"n":"Hayre","ci":"Chennai","st":"Meghalaya","j":"Cabin crew","g":"F","f":0,"mo":8,"hr":6}];
+
+// ============================================================
+// UTILS
+// ============================================================
+const fmt = n => {
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(1) + 'Cr';
+  if (n >= 100000) return '₹' + (n/100000).toFixed(1) + 'L';
+  if (n >= 1000) return '₹' + (n/1000).toFixed(1) + 'K';
+  return '₹' + n.toLocaleString('en-IN');
+};
+const fmtN = n => n.toLocaleString('en-IN');
+const catColor = c => ({entertainment:'#7c3aed',fitness_and_medical:'#059669',travel:'#0284c7',online_shopping:'#d97706'})[c] || '#888';
+const catColorL = c => ({entertainment:'#a78bfa',fitness_and_medical:'#34d399',travel:'#38bdf8',online_shopping:'#fbbf24'})[c] || '#aaa';
+const catLabel = c => ({entertainment:'Entertainment',fitness_and_medical:'Fitness & Medical',travel:'Travel',online_shopping:'Online Shopping'})[c] || c;
+const catClass = c => ({entertainment:'ent',fitness_and_medical:'fit',travel:'trv',online_shopping:'shp'})[c] || '';
+const monthNames = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+// ============================================================
+// HERO COUNTER
+// ============================================================
+function animateCount(el, target, prefix='', suffix='', decimals=0) {
+  let start = 0, dur = 1800;
+  let t0 = performance.now();
+  function step(t) {
+    let p = Math.min((t-t0)/dur, 1);
+    p = 1 - Math.pow(1-p, 3);
+    let val = start + (target-start)*p;
+    el.textContent = prefix + (decimals ? val.toFixed(decimals) : Math.round(val).toLocaleString('en-IN')) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+window.addEventListener('load', () => {
+  animateCount(document.getElementById('hero-n'), 8017, '', '');
+  setTimeout(() => {
+    document.getElementById('hero-s').textContent = '₹4.9Cr';
+    document.getElementById('hero-f').textContent = '52.4%';
+  }, 1800);
+});
+
+// ============================================================
+// PARTICLE CANVAS
+// ============================================================
+(function initParticles() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const CATS = ['ent','fit','trv','shp'];
+  const COLORS = ['rgba(124,58,237,','rgba(5,150,105,','rgba(2,132,199,','rgba(217,119,6,'];
+
+  for (let i = 0; i < 120; i++) {
+    particles.push({
+      x: Math.random(), y: Math.random(),
+      vx: (Math.random()-0.5)*0.0003, vy: (Math.random()-0.5)*0.0003,
+      r: Math.random()*2+0.5,
+      c: COLORS[Math.floor(Math.random()*4)],
+      a: Math.random()*0.6+0.1
+    });
+  }
+
+  let conns = [];
+  function buildConns() {
+    conns = [];
+    for (let i = 0; i < particles.length; i++)
+      for (let j = i+1; j < particles.length; j++) {
+        let dx = (particles[i].x - particles[j].x)*W,
+            dy = (particles[i].y - particles[j].y)*H,
+            d = Math.sqrt(dx*dx+dy*dy);
+        if (d < 80) conns.push([i,j,d]);
+      }
+  }
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    if (frame % 5 === 0) buildConns();
+    frame++;
+    conns.forEach(([i,j,d]) => {
+      ctx.beginPath();
+      ctx.strokeStyle = `rgba(255,255,255,${(1-d/80)*0.05})`;
+      ctx.lineWidth = 0.5;
+      ctx.moveTo(particles[i].x*W, particles[i].y*H);
+      ctx.lineTo(particles[j].x*W, particles[j].y*H);
+      ctx.stroke();
+    });
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = 1;
+      if (p.x > 1) p.x = 0;
+      if (p.y < 0) p.y = 1;
+      if (p.y > 1) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x*W, p.y*H, p.r, 0, Math.PI*2);
+      ctx.fillStyle = p.c + p.a + ')';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ============================================================
+// SECTION NAVIGATION
+// ============================================================
+let currentSection = 'overview';
+let initialized = {};
+
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-'+name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.textContent.toLowerCase().replace(/[^a-z]/g,'')=== name.replace(/[^a-z]/g,'')) b.classList.add('active');
+  });
+  currentSection = name;
+  if (!initialized[name]) { initialized[name]=true; initSection(name); }
+  document.getElementById('nav').scrollIntoView({behavior:'smooth'});
+}
+
+function initSection(name) {
+  if (name==='overview') initOverview();
+  else if (name==='categories') initCategories();
+  else if (name==='timeline') initTimeline();
+  else if (name==='receipts') initReceipts();
+  else if (name==='geography') initGeography();
+  else if (name==='fraud') initFraud();
+  else if (name==='story') initStory();
+}
+
+// ============================================================
+// OVERVIEW
+// ============================================================
+function initOverview() {
+  // Category bars
+  const cats = D.cats;
+  const maxTotal = Math.max(...Object.values(cats).map(c=>c.total));
+  const el = document.getElementById('cat-bars');
+  el.innerHTML = '';
+  Object.entries(cats).sort((a,b)=>b[1].total-a[1].total).forEach(([k,v]) => {
+    const pct = (v.total/maxTotal*100).toFixed(1);
+    el.innerHTML += `<div class="bar-row">
+      <span class="bar-label">${catLabel(k)}</span>
+      <div class="bar-track"><div class="bar-fill" style="background:${catColor(k)};width:0%" data-w="${pct}%"></div></div>
+      <span class="bar-val">${fmt(v.total)}</span>
+    </div>`;
+  });
+  setTimeout(() => el.querySelectorAll('.bar-fill').forEach(b => { b.style.width = b.dataset.w; }), 100);
+
+  // Donut
+  const donut = document.getElementById('donut-canvas');
+  const dctx = donut.getContext('2d');
+  const total = Object.values(cats).reduce((s,c)=>s+c.total,0);
+  let start = -Math.PI/2;
+  Object.entries(cats).sort((a,b)=>b[1].total-a[1].total).forEach(([k,v]) => {
+    const angle = (v.total/total)*Math.PI*2;
+    dctx.beginPath();
+    dctx.moveTo(80,80);
+    dctx.arc(80,80,70,start,start+angle);
+    dctx.closePath();
+    dctx.fillStyle = catColor(k);
+    dctx.fill();
+    start += angle;
+  });
+  dctx.beginPath();
+  dctx.arc(80,80,42,0,Math.PI*2);
+  dctx.fillStyle = '#12121e';
+  dctx.fill();
+
+  const leg = document.getElementById('donut-legend');
+  leg.innerHTML = Object.entries(cats).sort((a,b)=>b[1].total-a[1].total).map(([k,v]) =>
+    `<div class="donut-leg-row">
+      <div class="donut-leg-dot" style="background:${catColor(k)}"></div>
+      <span>${catLabel(k)}</span>
+      <span class="donut-leg-pct">${(v.total/total*100).toFixed(1)}%</span>
+    </div>`
+  ).join('');
+
+  // Monthly sparkline
+  const sp = document.getElementById('monthly-sparkline');
+  const months = Object.values(D.months);
+  const maxM = Math.max(...months.map(m=>m.total));
+  sp.innerHTML = months.map((m,i) => {
+    const h = Math.max(4, (m.total/maxM*72));
+    const colors = ['#7c3aed','#0284c7','#059669','#d97706'];
+    return `<div class="spark-bar" style="height:${h}px;background:${colors[i%4]};opacity:0.7;transition:height 1s ${i*0.05}s ease"></div>`;
+  }).join('');
+}
+
+// ============================================================
+// CATEGORIES
+// ============================================================
+function initCategories() {
+  const cards = document.getElementById('cat-detail-cards');
+  const catData = [
+    {k:'online_shopping', icon:'🛒', story:'Most popular category by volume. Peaks in January and July, suggesting seasonal shopping patterns.'},
+    {k:'travel', icon:'✈️', story:'Highest average transaction value at ₹5,487. June and March see the most travel spending.'},
+    {k:'entertainment', icon:'🎭', story:'Most fraud-prone category at 53.3%. Evening hours 6–11 PM see peak activity.'},
+    {k:'fitness_and_medical', icon:'💊', story:'Steady throughout the year. July sees a notable spike, possibly post-monsoon health awareness.'}
+  ];
+  cards.innerHTML = catData.map(({k,icon,story}) => {
+    const v = D.cats[k];
+    return `<div class="card">
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+        <span style="font-size:1.5rem">${icon}</span>
+        <div>
+          <div style="font-weight:700;font-size:1rem">${catLabel(k)}</div>
+          <span class="cat-pill cat-${catClass(k)}" style="margin-top:0.3rem;display:inline-flex">${fmtN(v.n)} transactions</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+        <div>
+          <div class="card-label">Total Spend</div>
+          <div style="font-weight:700;font-size:1.1rem;font-family:'Space Mono',monospace">${fmt(v.total)}</div>
+        </div>
+        <div>
+          <div class="card-label">Avg. Transaction</div>
+          <div style="font-weight:700;font-size:1.1rem;font-family:'Space Mono',monospace">${fmt(v.avg)}</div>
+        </div>
+        <div>
+          <div class="card-label">Fraud Rate</div>
+          <div style="font-weight:700;font-size:1.1rem;color:${v.fraud_pct>50?'var(--fraud-l)':'var(--fit-l)'};">${v.fraud_pct}%</div>
+        </div>
+        <div>
+          <div class="card-label">Share of Total</div>
+          <div style="font-weight:700;font-size:1.1rem;font-family:'Space Mono',monospace">${(v.total/D.summary.spent*100).toFixed(1)}%</div>
+        </div>
+      </div>
+      <div class="progress-bar-wrap" style="margin-bottom:0.5rem">
+        <div class="progress-bar-fill" style="background:${catColor(k)};width:${v.fraud_pct}%"></div>
+      </div>
+      <div style="font-size:0.8rem;color:var(--text-dim);line-height:1.5">${story}</div>
+    </div>`;
+  }).join('');
+
+  // Monthly pills
+  const pills = document.getElementById('cat-month-pills');
+  pills.innerHTML = ['All',...monthNames.slice(1)].map((m,i) =>
+    `<button class="month-pill ${i===0?'on':''}" onclick="selectCatMonth(${i},'this')">${m}</button>`
+  ).join('');
+
+  drawCatMonthly(0);
+}
+
+let selectedCatMonth = 0;
+function selectCatMonth(m, btn) {
+  selectedCatMonth = m;
+  document.querySelectorAll('.month-pill').forEach((p,i) => p.classList.toggle('on', i===m));
+  drawCatMonthly(m);
+}
+
+function drawCatMonthly(m) {
+  const canvas = document.getElementById('cat-monthly-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth || 700, H = 220;
+  canvas.width = W; canvas.height = H;
+  ctx.clearRect(0,0,W,H);
+
+  const months = m === 0 ? Object.entries(D.months) : [[String(m), D.months[String(m)]]];
+  const catKeys = ['entertainment','fitness_and_medical','travel','online_shopping'];
+  const padding = { top:20, bottom:30, left:10, right:10 };
+  const barW = m===0 ? (W - padding.left - padding.right) / 12 - 4 : (W - padding.left - padding.right) / 4 - 4;
+
+  let allMonths = Object.entries(D.months);
+  let maxVal = 0;
+  allMonths.forEach(([,md]) => { let t=Object.values(md.cats).reduce((s,v)=>s+v,0); if(t>maxVal) maxVal=t; });
+
+  allMonths.forEach(([mk, md], mi) => {
+    if (m !== 0 && parseInt(mk) !== m) return;
+    const xBase = padding.left + mi * ((W-padding.left-padding.right)/12);
+    let yBottom = H - padding.bottom;
+    catKeys.forEach(ck => {
+      const v = md.cats[ck] || 0;
+      const bh = (v/maxVal) * (H-padding.top-padding.bottom);
+      ctx.fillStyle = catColor(ck);
+      ctx.globalAlpha = 0.85;
+      ctx.beginPath();
+      ctx.roundRect(xBase+2, yBottom-bh, barW-4, bh, [3,3,0,0]);
+      ctx.fill();
+      yBottom -= bh;
+    });
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(232,232,240,0.35)';
+    ctx.font = '10px Space Grotesk';
+    ctx.textAlign = 'center';
+    ctx.fillText(monthNames[parseInt(mk)], xBase + barW/2, H - 8);
+  });
+}
+
+// ============================================================
+// TIMELINE
+// ============================================================
+function initTimeline() {
+  // Hour wheel
+  const canvas = document.getElementById('hour-canvas');
+  const ctx = canvas.getContext('2d');
+  const cx = 110, cy = 110, r = 90;
+  const hours = Object.entries(D.hourly);
+  const maxN = Math.max(...hours.map(([,h])=>h.n));
+
+  ctx.clearRect(0,0,220,220);
+
+  hours.forEach(([h, hd]) => {
+    const angle = (parseInt(h)/24)*Math.PI*2 - Math.PI/2;
+    const nextAngle = ((parseInt(h)+1)/24)*Math.PI*2 - Math.PI/2;
+    const ri = 30, ro = 30 + (hd.n/maxN)*58;
+    ctx.beginPath();
+    ctx.moveTo(cx + ri*Math.cos(angle), cy + ri*Math.sin(angle));
+    ctx.arc(cx, cy, ro, angle, nextAngle);
+    ctx.arc(cx, cy, ri, nextAngle, angle, true);
+    ctx.closePath();
+    const fraudRatio = hd.fraud/hd.n;
+    ctx.fillStyle = `rgba(${fraudRatio > 0.55 ? '239,68,68' : fraudRatio > 0.5 ? '217,119,6' : '5,150,105'},0.7)`;
+    ctx.fill();
+  });
+
+  ctx.fillStyle = '#12121e';
+  ctx.beginPath();
+  ctx.arc(cx,cy,28,0,Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(232,232,240,0.6)';
+  ctx.font = 'bold 11px Space Mono';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('24h', cx, cy);
+
+  // Hour legend (peak hours)
+  const legend = document.getElementById('hour-legend');
+  const sorted = hours.sort((a,b)=>b[1].n-a[1].n).slice(0,6);
+  legend.innerHTML = `<div style="font-size:0.75rem;color:var(--text-faint);margin-bottom:0.75rem;font-family:'Space Mono',monospace">TOP ACTIVE HOURS</div>`;
+  sorted.forEach(([h, hd]) => {
+    const h12 = parseInt(h);
+    const label = h12===0?'12 AM':h12<12?`${h12} AM`:h12===12?'12 PM':`${h12-12} PM`;
+    legend.innerHTML += `<div class="hour-entry">
+      <span class="hour-time">${label}</span>
+      <div class="bar-track"><div class="bar-fill" style="background:#0284c7;width:${(hd.n/maxN*100)}%"></div></div>
+      <span class="hour-n">${fmtN(hd.n)}</span>
+    </div>`;
+  });
+
+  // Peak hours insight
+  const peakEl = document.getElementById('peak-hours-list');
+  peakEl.innerHTML = `
+    <div class="insight-card" style="margin-bottom:0.75rem">
+      <div class="insight-icon" style="background:rgba(124,58,237,0.15);color:var(--ent-l)">🌙</div>
+      <div>
+        <div class="insight-title">Midnight Activity</div>
+        <div class="insight-text">12 AM sees 496 transactions — the highest of any hour. People are active late at night, which is also when fraud risk rises.</div>
+      </div>
+    </div>
+    <div class="insight-card" style="margin-bottom:0.75rem">
+      <div class="insight-icon" style="background:rgba(217,119,6,0.15);color:var(--shp-l)">☀️</div>
+      <div>
+        <div class="insight-title">Lunch Hour Spike</div>
+        <div class="insight-text">11 AM–12 PM sees 975 combined transactions. The lunch break is prime time for both legitimate spending and fraud attempts.</div>
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon" style="background:rgba(5,150,105,0.15);color:var(--fit-l)">🌆</div>
+      <div>
+        <div class="insight-title">Evening Rush</div>
+        <div class="insight-text">5 PM shows 511 transactions — the second-highest hour. Evening commutes and post-work shopping drive this surge.</div>
+      </div>
+    </div>`;
+
+  // Timeline
+  const tl = document.getElementById('timeline-list');
+  const sorted2 = RECS.sort((a,b) => b.a-a.a).slice(0,15);
+  tl.innerHTML = sorted2.map(r => {
+    const fraudClass = r.f ? 'amount-fraud' : 'amount-legit';
+    return `<div class="timeline-item" onclick="openModal(${JSON.stringify(r).replace(/"/g,'&quot;')})">
+      <div class="timeline-meta">
+        <span class="timeline-date">${r.dt}</span>
+        <span class="cat-pill cat-${catClass(r.c)}">${catLabel(r.c)}</span>
+        ${r.f?'<span class="cat-pill cat-fraud">FRAUD</span>':''}
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div class="timeline-name">${r.n||'Anonymous'}</div>
+          <div class="timeline-merchant">${r.m||'Unknown Merchant'} · ${r.ci||r.st||'Unknown'}</div>
+        </div>
+        <div class="timeline-amount ${fraudClass}">${fmt(r.a)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// RECEIPTS
+// ============================================================
+let activeFilter = 'all';
+let searchQ = '';
+
+function initReceipts() {
+  document.getElementById('search-input').addEventListener('input', e => {
+    searchQ = e.target.value.toLowerCase();
+    renderReceipts();
+  });
+  renderReceipts();
+}
+
+function toggleFilter(f) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+  event.target.classList.add('on');
+  renderReceipts();
+}
+
+function renderReceipts() {
+  let filtered = RECS.filter(r => {
+    if (activeFilter === 'fraud') return r.f === 1;
+    if (activeFilter !== 'all') return r.c === activeFilter;
+    return true;
+  }).filter(r => {
+    if (!searchQ) return true;
+    return (r.n+r.m+r.ci+r.st+r.j).toLowerCase().includes(searchQ);
+  });
+
+  document.getElementById('receipts-count').textContent = `Showing ${filtered.length} of ${RECS.length} receipts`;
+
+  const grid = document.getElementById('receipts-grid');
+  grid.innerHTML = filtered.slice(0,200).map(r => {
+    const cls = catClass(r.c);
+    return `<div class="receipt-card ${cls} ${r.f?'fraud-card':''}" onclick="openModal(${JSON.stringify(r).replace(/"/g,'&quot;')})">
+      ${r.f?'<span class="fraud-badge">FRAUD</span>':''}
+      <div class="receipt-top">
+        <span class="receipt-merchant">${r.m||'Unknown Merchant'}</span>
+        <span class="receipt-amount ${r.f?'amount-fraud':'amount-legit'}">${fmt(r.a)}</span>
+      </div>
+      <div class="receipt-bottom">
+        <span class="receipt-person">${r.n||'Anonymous'}</span>
+        <span class="cat-pill cat-${cls}" style="font-size:0.65rem;padding:0.15rem 0.5rem">${catLabel(r.c)}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:0.4rem">
+        <span class="receipt-loc">${[r.ci,r.st].filter(Boolean).join(', ')||'—'}</span>
+        <span class="receipt-date">${r.dt.split(' ')[0]}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// GEOGRAPHY
+// ============================================================
+function initGeography() {
+  const maxTotal = Math.max(...D.states.map(s=>s.total));
+  const el = document.getElementById('state-grid');
+  el.innerHTML = D.states.map(s => {
+    const intensity = s.total/maxTotal;
+    const hue = s.fp > 60 ? 0 : s.fp > 50 ? 39 : 142;
+    const fraudColor = s.fp > 60 ? 'var(--fraud-l)' : s.fp > 50 ? 'var(--shp-l)' : 'var(--fit-l)';
+    return `<div class="state-card" onclick="openStateDetail('${s.state}')">
+      <div class="state-heat" style="background:hsl(${220+hue*intensity},70%,50%);opacity:${intensity*0.15}"></div>
+      <div class="state-name">${s.state}</div>
+      <div class="state-total">${fmt(s.total)}</div>
+      <div class="state-fp" style="color:${fraudColor}">${s.fp}% fraud · ${fmtN(s.n)} txns</div>
+      <div class="progress-bar-wrap" style="margin-top:0.5rem">
+        <div class="progress-bar-fill" style="background:hsl(${220},70%,55%);width:${intensity*100}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openStateDetail(state) {
+  const s = D.states.find(x=>x.state===state);
+  if (!s) return;
+  document.getElementById('modal-content').innerHTML = `
+    <div class="modal-receipt-header">
+      <div class="modal-merchant">${s.state}</div>
+      <div class="modal-amount">${fmt(s.total)}</div>
+    </div>
+    <div class="modal-fields">
+      <div><div class="modal-field-label">Transactions</div><div class="modal-field-value">${fmtN(s.n)}</div></div>
+      <div><div class="modal-field-label">Fraud Rate</div><div class="modal-field-value" style="color:${s.fp>60?'var(--fraud-l)':s.fp>50?'var(--shp-l)':'var(--fit-l)'}">${s.fp}%</div></div>
+      <div><div class="modal-field-label">Fraud Count</div><div class="modal-field-value">${fmtN(s.fraud)}</div></div>
+      <div><div class="modal-field-label">Avg Transaction</div><div class="modal-field-value">${fmt(Math.round(s.total/s.n))}</div></div>
+    </div>
+    <div style="margin-top:1.5rem;padding:1rem;background:rgba(255,255,255,0.04);border-radius:8px;font-size:0.85rem;color:var(--text-dim)">
+      ${s.fp > 65 ? `⚠️ High fraud alert: ${s.state} has one of the highest fraud rates in the dataset. More than ${s.fp}% of transactions here are flagged.` : s.fp < 40 ? `✅ Relatively safe: ${s.state} shows a below-average fraud rate, suggesting either better security practices or different transaction patterns.` : `📊 Average risk zone: ${s.state} sits near the national average fraud rate of 52.4%.`}
+    </div>`;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+// ============================================================
+// FRAUD
+// ============================================================
+function initFraud() {
+  // Animate circle
+  setTimeout(() => {
+    const c = document.getElementById('fraud-circle');
+    const circumference = 2 * Math.PI * 80;
+    c.style.strokeDashoffset = circumference * (1 - 0.524);
+  }, 300);
+
+  // Category fraud bars
+  const el = document.getElementById('fraud-cat-bars');
+  const maxFp = 60;
+  el.innerHTML = Object.entries(D.cats).sort((a,b)=>b[1].fraud_pct-a[1].fraud_pct).map(([k,v]) =>
+    `<div class="bar-row">
+      <span class="bar-label">${catLabel(k)}</span>
+      <div class="bar-track"><div class="bar-fill" style="background:var(--fraud);width:0%" data-w="${(v.fraud_pct/maxFp*100)}%"></div></div>
+      <span class="bar-val">${v.fraud_pct}%</span>
+    </div>`
+  ).join('');
+  setTimeout(() => el.querySelectorAll('.bar-fill').forEach(b => b.style.width=b.dataset.w), 200);
+
+  // Insights
+  document.getElementById('fraud-insights').innerHTML = [
+    {icon:'🌙', bg:'rgba(124,58,237,0.15)', color:'var(--ent-l)', title:'Night Owl Fraud', text:'Transactions between 9 PM–3 AM carry the highest fraud rates. Hour 3 AM has 52.7% fraud rate.'},
+    {icon:'🏦', bg:'rgba(239,68,68,0.15)', color:'var(--fraud-l)', title:'Bihar Alert', text:'Bihar has the highest state-level fraud rate at 72.4%, nearly 20 points above the national average.'},
+    {icon:'🛒', bg:'rgba(217,119,6,0.15)', color:'var(--shp-l)', title:'Shopping Risk', text:'Online shopping leads fraud by category at 53.7%, suggesting e-commerce platforms are prime targets.'},
+    {icon:'💰', bg:'rgba(5,150,105,0.15)', color:'var(--fit-l)', title:'Travel Is Safer', text:'Travel transactions have the lowest fraud rate at 48.1%, possibly due to stricter verification at booking.'},
+    {icon:'👤', bg:'rgba(2,132,199,0.15)', color:'var(--trv-l)', title:'Gender Parity', text:'Fraud affects M and F users almost equally — 50.5% vs 51.2% — suggesting fraud is not targeted by gender.'},
+    {icon:'📅', bg:'rgba(124,58,237,0.15)', color:'var(--ent-l)', title:'June Peak', text:'June 2023 had 522 fraud incidents — the highest single month, coinciding with the highest overall volume.'}
+  ].map(i => `<div class="insight-card">
+    <div class="insight-icon" style="background:${i.bg};color:${i.color}">${i.icon}</div>
+    <div><div class="insight-title">${i.title}</div><div class="insight-text">${i.text}</div></div>
+  </div>`).join('');
+
+  // State fraud bars
+  const sfEl = document.getElementById('fraud-state-bars');
+  const topStates = [...D.states].sort((a,b)=>b.fp-a.fp).slice(0,10);
+  sfEl.innerHTML = topStates.map(s =>
+    `<div class="bar-row">
+      <span class="bar-label">${s.state.split(' ')[0]}</span>
+      <div class="bar-track"><div class="bar-fill" style="background:${s.fp>65?'var(--fraud)':s.fp>55?'#f97316':'var(--shp)'};width:0%" data-w="${s.fp}%"></div></div>
+      <span class="bar-val">${s.fp}%</span>
+    </div>`
+  ).join('');
+  setTimeout(() => sfEl.querySelectorAll('.bar-fill').forEach(b => b.style.width=b.dataset.w), 200);
+}
+
+// ============================================================
+// STORY
+// ============================================================
+function initStory() {
+  const stories = [
+    {
+      num:'01', color:'var(--ent-l)', eyebrow:'The Shadow Economy',
+      headline:'One in Two Transactions Is Suspect',
+      body:'With 52.4% of all transactions flagged as fraudulent, this isn\'t an anomaly — it\'s a pattern. The data suggests a systematic issue: either fraud detection is overly aggressive, or digital financial crime in India is far more widespread than public awareness suggests. Bihar (72.4%) and Gujarat (70.9%) show the sharpest concentration.',
+      data:[{n:'5,046', l:'Flagged transactions'},{n:'₹25.6L', l:'Potential fraud value'},{n:'28', l:'States affected'}]
+    },
+    {
+      num:'02', color:'var(--trv-l)', eyebrow:'The Night Never Sleeps',
+      headline:'Digital India Transacts Around the Clock',
+      body:'Midnight (12 AM) sees 496 transactions — the single busiest hour. Early morning 3 AM still records 404. This is not a 9-to-5 economy. The digital pulse of India beats continuously, with fraud following close behind: the 3 AM hour has a disproportionately high fraud rate, suggesting that late-night transactions deserve extra scrutiny.',
+      data:[{n:'496', l:'Txns at midnight'},{n:'52.4%', l:'3 AM fraud rate'},{n:'975', l:'11AM–12PM combined'}]
+    },
+    {
+      num:'03', color:'var(--shp-l)', eyebrow:'The Wandering Spender',
+      headline:'Travel Moves the Most Money',
+      body:'Travel leads all categories in total spend at ₹1.2 Cr, with an average transaction of ₹5,487 — the highest of any category. March, April, and June are peak travel months, likely corresponding to school breaks and summer holidays. Interestingly, travel also has the lowest fraud rate at 48.1%, suggesting consumers are more careful with high-value travel bookings.',
+      data:[{n:'₹1.2Cr', l:'Travel spending'},{n:'₹5,487', l:'Avg. travel txn'},{n:'48.1%', l:'Fraud rate (lowest)'}]
+    },
+    {
+      num:'04', color:'var(--fit-l)', eyebrow:'The Geographic Divide',
+      headline:'Northeast India Punches Above Its Weight',
+      body:'States like Nagaland, Sikkim, Tripura, and Mizoram appear prominently in the data despite their smaller populations. Uttarakhand leads in transaction count (384), while Tamil Nadu tops spending (₹20.7L). Himachal Pradesh and Jharkhand stand out for having relatively lower fraud rates (35.6% and 37.9%), pointing to regional differences in financial security.',
+      data:[{n:'₹20.7L', l:'Tamil Nadu spend'},{n:'35.6%', l:'HP fraud rate (lowest)'},{n:'311', l:'Cities represented'}]
+    },
+    {
+      num:'05', color:'var(--ent-l)', eyebrow:'The Human Thread',
+      headline:'8,017 Transactions, One Digital Nation',
+      body:'Behind every receipt is a name: Aarav from Bhubaneswar, Parinaaz Raju in Sikkim spending ₹9,980 at a single merchant, Trisha Saxena in Gorakhpur making India\'s largest single transaction (₹9,992). Event organisers, software engineers, clinical psychologists, cabin crew — 1,346 unique merchants serving a workforce as diverse as India itself. These fragments, when read together, are not data. They are life.',
+      data:[{n:'1,346', l:'Unique merchants'},{n:'₹9,992', l:'Largest transaction'},{n:'28', l:'Indian states'}]
+    }
+  ];
+
+  document.getElementById('story-cards').innerHTML = stories.map(s =>
+    `<div class="story-card fade-in">
+      <div class="story-num">${s.num}</div>
+      <div class="story-eyebrow" style="color:${s.color}">${s.eyebrow}</div>
+      <div class="story-headline">${s.headline}</div>
+      <div class="story-body">${s.body}</div>
+      <div class="story-data">
+        ${s.data.map(d=>`<div class="story-datum"><div class="story-datum-n" style="color:${s.color}">${d.n}</div><div class="story-datum-l">${d.l}</div></div>`).join('')}
+      </div>
+    </div>`
+  ).join('');
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openModal(r) {
+  if (typeof r === 'string') r = JSON.parse(r.replace(/&quot;/g, '"'));
+  const fraudLabel = r.f ? `<span class="cat-pill cat-fraud">FRAUD FLAGGED</span>` : `<span class="cat-pill cat-fit">LEGITIMATE</span>`;
+  document.getElementById('modal-content').innerHTML = `
+    <div class="modal-receipt-header">
+      <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.5rem">
+        <span class="cat-pill cat-${catClass(r.c)}">${catLabel(r.c)}</span>
+        ${fraudLabel}
+      </div>
+      <div class="modal-merchant">${r.m||'Unknown Merchant'}</div>
+      <div class="modal-amount ${r.f?'amount-fraud':'amount-legit'}">${fmt(r.a)}</div>
+    </div>
+    <div class="modal-fields">
+      <div><div class="modal-field-label">Date & Time</div><div class="modal-field-value" style="font-size:0.8rem;font-family:'Space Mono',monospace">${r.dt}</div></div>
+      <div><div class="modal-field-label">Person</div><div class="modal-field-value">${r.n||'Anonymous'}</div></div>
+      <div><div class="modal-field-label">City</div><div class="modal-field-value">${r.ci||'—'}</div></div>
+      <div><div class="modal-field-label">State</div><div class="modal-field-value">${r.st||'—'}</div></div>
+      <div><div class="modal-field-label">Occupation</div><div class="modal-field-value" style="font-size:0.8rem">${r.j||'—'}</div></div>
+      <div><div class="modal-field-label">Gender</div><div class="modal-field-value">${r.g==='M'?'Male':r.g==='F'?'Female':'—'}</div></div>
+    </div>`;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal-overlay') || e.currentTarget === document.getElementById('modal-close')) {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+initialized['overview'] = true;
+initOverview();
+</script>
+</body>
+</html>
